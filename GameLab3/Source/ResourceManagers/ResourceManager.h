@@ -11,15 +11,19 @@ public:
 	ResourceManager();
 	~ResourceManager();
 
-	void load(IdentityType id, const std::string &fileName);
+	bool load(IdentityType id, const std::string &fileName);
+
+	template<typename SecondType>
+	bool load(IdentityType id, const std::string &fileName, const SecondType &secondParam);
 
 	std::shared_ptr<ResourceType> get(IdentityType id);
 
-	template<typename SecondType>
-	void load(IdentityType id, const std::string &fileName, const SecondType &secondParam);
+	void unload(IdentityType id);
+
+	void unloadAll();
 
 private:
-	void insertResource(IdentityType id, std::shared_ptr<ResourceType> resource);
+	bool insertResource(IdentityType id, std::shared_ptr<ResourceType> resource);
 
 private:
 	std::map<IdentityType, std::shared_ptr<ResourceType>> mResourceMap;

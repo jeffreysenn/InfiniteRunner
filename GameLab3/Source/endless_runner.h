@@ -39,7 +39,7 @@ private:
    sf::RenderWindow mWindow;
    input_manager input_manager_;
 
-   ResourceManager<sf::Texture, Texture::ID> TextureManager;
+   ResourceManager<sf::Texture, Texture::ID> mTextureManager;
    StateMachine stateMachine_;
 
 };

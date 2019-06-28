@@ -58,7 +58,7 @@ bool endless_runner::init()
 	input_manager_.attach_listener(this);
 
 	// note: preload textures
-	TextureManager.load(Texture::Avatar, "assets/sunny-land-files/spritesheets/player-idle.png");
+	mTextureManager.load(Texture::Avatar, "assets/sunny-land-files/spritesheets/player-idle.png");
 
 
 	// note: preload sound buffers
@@ -70,7 +70,7 @@ bool endless_runner::init()
 
 void endless_runner::run()
 {
-	std::shared_ptr<sf::Texture> texture(TextureManager.get(Texture::Avatar));
+	std::shared_ptr<sf::Texture> texture(mTextureManager.get(Texture::Avatar));
 	sf::Sprite avatar;
 	if (texture != nullptr)
 		avatar.setTexture(*texture);
