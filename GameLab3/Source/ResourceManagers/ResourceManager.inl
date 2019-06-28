@@ -23,8 +23,7 @@ bool ResourceManager<ResourceType, IdentityType>::load(IdentityType id, const st
 		return false;
 	}
 
-	insertResource(id, std::move(resource));
-	return true;
+	return insertResource(id, std::move(resource));
 }
 
 template<typename ResourceType, typename IdentityType>
@@ -38,12 +37,23 @@ bool ResourceManager<ResourceType, IdentityType>::load(IdentityType id, const st
 		return false;
 	}
 
-	insertResource(id, std::move(resource));
-	return true;
+	return insertResource(id, std::move(resource));
 }
 
 template<typename ResourceType, typename IdentityType>
 std::shared_ptr<ResourceType> ResourceManager<ResourceType, IdentityType>::get(IdentityType id)
+{
+	auto found = mResourceMap.find(id);
+	if (found == mResourceMap.end())
+	{
+		std::cout << "ResourceManager::get - Failed to get!" << std::endl;
+		return nullptr;
+	}
+	return found->second;
+}
+
+template<typename ResourceType, typename IdentityType>
+std::shared_ptr<const ResourceType> ResourceManager<ResourceType, IdentityType>::get(IdentityType id) const
 {
 	auto found = mResourceMap.find(id);
 	if (found == mResourceMap.end())

@@ -70,7 +70,8 @@ bool endless_runner::init()
 
 void endless_runner::run()
 {
-	std::shared_ptr<sf::Texture> texture(mTextureManager.get(Texture::Avatar));
+	std::shared_ptr<const sf::Texture> texture(mTextureManager.get(Texture::Avatar));
+
 	sf::Sprite avatar;
 	if (texture != nullptr)
 		avatar.setTexture(*texture);
