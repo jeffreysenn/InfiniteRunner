@@ -95,6 +95,8 @@ IF %ERRORLEVEL% LEQ 1 exit 0</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Source\SceneNodes\SceneNode.cpp" />
+    <ClCompile Include="Source\Actors\Actor.cpp" />
     <ClCompile Include="Source\States\DeadState.cpp" />
     <ClCompile Include="Source\States\MenuState.cpp" />
     <ClCompile Include="Source\States\PlayState.cpp" />
@@ -107,8 +109,12 @@ IF %ERRORLEVEL% LEQ 1 exit 0</Command>
     <ClCompile Include="Source\main.cc" />
     <ClCompile Include="Source\States\State.cpp" />
     <ClCompile Include="Source\States\StateMachine.cpp" />
+    <ClCompile Include="Source\Actors\SpriteActor.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Source\ResourceManagers\ResourceIdentifiers.h" />
+    <ClInclude Include="Source\SceneNodes\SceneNode.h" />
+    <ClInclude Include="Source\Actors\Actor.h" />
     <ClInclude Include="Source\ResourceManagers\ResourceManager.h" />
     <ClInclude Include="Source\States\DeadState.h" />
     <ClInclude Include="Source\endless_runner.h" />
@@ -124,6 +130,7 @@ IF %ERRORLEVEL% LEQ 1 exit 0</Command>
     <ClInclude Include="Source\States\State.h" />
     <ClInclude Include="Source\States\StateMachine.h" />
     <ClInclude Include="Source\Input\InputCode.h" />
+    <ClInclude Include="Source\Actors\SpriteActor.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Source\ResourceManagers\ResourceManager.inl" />

@@ -5,7 +5,7 @@
 
 #include "Input/input_listener.h"
 #include "Input/input_manager.h"
-#include "ResourceManagers/ResourceManager.h"
+#include "ResourceManagers/ResourceIdentifiers.h"
 #include "States/StateMachine.h"
 #include "States/State.h"
 
@@ -13,14 +13,7 @@
 #include <memory>
 #include <stack>
 
-namespace Texture
-{
-	enum ID
-	{
-		Avatar,
-		NONEXIST,
-	};
-}
+
 
 struct endless_runner : input_listener
 {
@@ -39,7 +32,7 @@ private:
    sf::RenderWindow mWindow;
    input_manager input_manager_;
 
-   ResourceManager<sf::Texture, Texture::ID> mTextureManager;
+   TextureManager mTextureManager;
    StateMachine stateMachine_;
 
 };
