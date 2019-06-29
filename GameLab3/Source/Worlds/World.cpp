@@ -17,6 +17,7 @@ World::World(sf::RenderWindow &window)
 void World::loadTextures()
 {
 	mTextureManager.load(Texture::Back, "assets/sunny-land-files/environment/back.png");
+	mTextureManager.load(Texture::Middle, "assets/sunny-land-files/environment/middle.png");
 	mTextureManager.load(Texture::Avatar, "assets/sunny-land-files/spritesheets/player-idle.png");
 }
 
@@ -25,25 +26,54 @@ void World::buildScene()
 	// Create a camera
 	std::unique_ptr<CameraActor> cameraActor(std::make_unique<CameraActor>());
 	mCamera = cameraActor.get();
-	cameraActor->setSize(384, 240);
+	mSceneGraph.attachChild(std::move(cameraActor));
+	mCamera->setSize(480, 270);
+	mCamera->setVelocity(mScrollVelocity);
 
+	// Create a background node and attach to the camera
+	std::unique_ptr<SceneNode> backgroundNode(std::make_unique<SceneNode>());
+	mBackgroundNode = backgroundNode.get();
+	mCamera->attachChild(std::move(backgroundNode));
+
+	// Create scrolling background actors and attach to the background node
 	// Get back texture and setup repeated
-	auto backtTxture = mTextureManager.get(Texture::Back);
-	backtTxture->setRepeated(true);
-	// Create and attach backgroundNode to layer
-	std::unique_ptr<ScrollingBackgroundActor> backgroundNode(std::make_unique<ScrollingBackgroundActor>(*backtTxture, Rendering::Background));
-	cameraActor->attachChild(std::move(backgroundNode));
+	auto backTxture = mTextureManager.get(Texture::Back);
+	backTxture->setRepeated(true);
+	// Create and attach backgroundNode to mBackground
+	std::unique_ptr<ScrollingBackgroundActor> backActor(
+		std::make_unique<ScrollingBackgroundActor>(
+		*backTxture,
+		sf::IntRect(0, 0, 480, 240),
+		Rendering::Background,
+		mScrollVelocity));
+	backActor->move(0, (384 - 480)/2);
+	mBackgroundNode->attachChild(std::move(backActor));
 
-	// Create and attach avatarActor to layer
+	// Same for middle background
+	auto midTexture = mTextureManager.get(Texture::Middle);
+	midTexture->setRepeated(true);
+	sf::IntRect midRect;
+	std::unique_ptr<ScrollingBackgroundActor> midActor(
+		std::make_unique<ScrollingBackgroundActor>(
+		*midTexture,
+		sf::IntRect(0, 0, 480, 368),
+		Rendering::Midground,
+		sf::Vector2f(60, 0)));
+	// Offset it
+	midActor->move(0, 100);
+	mBackgroundNode->attachChild(std::move(midActor));
+
+
+	// Create and attach avatarActor to scene graph
 	auto avatarTexture = mTextureManager.get(Texture::Avatar);
-	std::unique_ptr<AvatarActor> avatarActor(std::make_unique<AvatarActor>(*avatarTexture));
+	std::unique_ptr<AvatarActor> avatarActor(
+		std::make_unique<AvatarActor>(
+		*avatarTexture,
+		sf::IntRect(0, 0, 32, 32)
+		));
 	mAvatarActor = avatarActor.get();
 	mAvatarActor->setPosition(mSpawnPosition);
-	mAvatarActor->setVelocity(100, 100);
-	// Attach mCamera to avatarActor
-	sf::Vector2f cameraOffset(0, 0);
-	cameraActor->setPosition(cameraOffset);
-	mAvatarActor->attachChild(std::move(cameraActor));
+	mAvatarActor->setVelocity(30, 0);
 	mSceneGraph.attachChild(std::move(avatarActor));
 }
 

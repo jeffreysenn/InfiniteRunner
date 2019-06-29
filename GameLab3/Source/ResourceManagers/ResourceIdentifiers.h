@@ -12,6 +12,7 @@ namespace Texture
 	{
 		Avatar,
 		Back,
+		Middle,
 		NONEXIST,
 	};
 }

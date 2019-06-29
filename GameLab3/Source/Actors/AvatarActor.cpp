@@ -7,6 +7,12 @@ AvatarActor::AvatarActor(const sf::Texture& texture, Rendering::Layer layer)
 {
 }
 
+AvatarActor::AvatarActor(const sf::Texture & texture, const sf::IntRect & rect, Rendering::Layer layer)
+	: SpriteActor(texture, rect, layer)
+{
+}
+
+
 
 AvatarActor::~AvatarActor()
 {

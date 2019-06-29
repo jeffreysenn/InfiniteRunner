@@ -28,10 +28,11 @@ private:
 	sf::RenderWindow &mWindow;
 	Renderer mRenderer;
 	class CameraActor* mCamera;
+	class SceneNode* mBackgroundNode;
 	TextureManager mTextureManager;
 	SceneNode mSceneGraph;
 	class AvatarActor* mAvatarActor;
-	sf::Vector2f mSpawnPosition;
+	sf::Vector2f mSpawnPosition = sf::Vector2f(-100.f, 70.f);
 	sf::Vector2f mScrollVelocity;
 };
 

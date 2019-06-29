@@ -1,14 +1,19 @@
 #include "ScrollingBackgroundActor.h"
 
+#include <cmath> 
 
 
-ScrollingBackgroundActor::ScrollingBackgroundActor(const sf::Texture& texture, Rendering::Layer layer)
+ScrollingBackgroundActor::ScrollingBackgroundActor(const sf::Texture& texture, Rendering::Layer layer, sf::Vector2f scrollingVel)
 	: SpriteActor(texture, layer)
+	, mScrollingVel(scrollingVel)
+	, mOffset(0, 0)
 {
 }
 
-ScrollingBackgroundActor::ScrollingBackgroundActor(const sf::Texture &texture, const sf::IntRect & rect, Rendering::Layer layer)
+ScrollingBackgroundActor::ScrollingBackgroundActor(const sf::Texture &texture, const sf::IntRect & rect, Rendering::Layer layer, sf::Vector2f scrollingVel)
 	: SpriteActor(texture, rect, layer)
+	, mScrollingVel(scrollingVel)
+	, mOffset(0, 0)
 {
 }
 
@@ -20,5 +25,16 @@ void ScrollingBackgroundActor::updateSelf(float deltaTime)
 {
 	SpriteActor::updateSelf(deltaTime);
 
-	mSprite.setTextureRect(sf::IntRect((int)(mSprite.getTextureRect().left+10), 0, mSprite.getTextureRect().width, mSprite.getTextureRect().height));
+	mOffset += mScrollingVel * deltaTime;
+
+	// Making sure mTextRectPos does not go out of range
+	mOffset.x = (float) std::fmod(mOffset.x, mSprite.getTexture()->getSize().x);
+	mOffset.y = (float) std::fmod(mOffset.y, mSprite.getTexture()->getSize().y);
+
+	sf::IntRect rect((int) mOffset.x,
+					 (int) mOffset.y,
+					 mSprite.getTextureRect().width,
+					 mSprite.getTextureRect().height);
+
+	mSprite.setTextureRect(rect);
 }

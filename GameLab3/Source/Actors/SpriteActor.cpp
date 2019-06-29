@@ -6,14 +6,20 @@ SpriteActor::SpriteActor(const sf::Texture& texture, Rendering::Layer layer)
 	: mSprite(texture)
 	, mLayer(layer)
 {
-	sf::FloatRect rect(mSprite.getLocalBounds());
-	mSprite.setOrigin(rect.width / 2, rect.height / 2);
+	CentreOrigin();
 }
 
 SpriteActor::SpriteActor(const sf::Texture & texture, const sf::IntRect& rect, Rendering::Layer layer)
 	: mSprite(texture, rect)
 	, mLayer(layer)
 {
+	CentreOrigin();
+}
+
+void SpriteActor::CentreOrigin()
+{
+	sf::FloatRect spriteBounds(mSprite.getLocalBounds());
+	mSprite.setOrigin(spriteBounds.width / 2, spriteBounds.height / 2);
 }
 
 
