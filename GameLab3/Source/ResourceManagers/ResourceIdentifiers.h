@@ -11,6 +11,7 @@ namespace Texture
 	enum ID
 	{
 		Avatar,
+		Back,
 		NONEXIST,
 	};
 }

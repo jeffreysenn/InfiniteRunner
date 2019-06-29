@@ -1,8 +1,10 @@
 #pragma once
+#include "../SceneNodes/SceneNode.h"
 
 #include <SFML/System.hpp>
 
-class Actor
+
+class Actor : public SceneNode
 {
 public:
 	Actor();
@@ -13,6 +15,8 @@ public:
 	void setVelocity(float vx, float vy) { mVelocity = sf::Vector2f(vx, vy); }
 
 	sf::Vector2f getVelocity() const { return mVelocity; }
+
+	virtual void updateSelf(float deltaTime) override;
 
 private:
 	sf::Vector2f mVelocity;

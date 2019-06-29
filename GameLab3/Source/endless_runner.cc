@@ -21,17 +21,14 @@ static float get_deltatime(sf::Clock &clock)
 }
 
 endless_runner::endless_runner()
-	: input_manager_(mWindow)
+	: mWindow(sf::VideoMode(1280, 720), "endless-runner", sf::Style::Titlebar | sf::Style::Close)
+	, input_manager_(mWindow)
+	, mWorld(mWindow)
 {
 }
 
 bool endless_runner::init()
 {
-	// note: create a non-resizable window 
-	mWindow.create(sf::VideoMode(1280, 720),
-		"endless-runner",
-		sf::Style::Titlebar | sf::Style::Close);
-
 	// note: disable key repeats
 	mWindow.setKeyRepeatEnabled(false);
 
@@ -58,8 +55,6 @@ bool endless_runner::init()
 	input_manager_.attach_listener(this);
 
 	// note: preload textures
-	mTextureManager.load(Texture::Avatar, "assets/sunny-land-files/spritesheets/player-idle.png");
-
 
 	// note: preload sound buffers
 
@@ -70,12 +65,6 @@ bool endless_runner::init()
 
 void endless_runner::run()
 {
-	std::shared_ptr<const sf::Texture> texture(mTextureManager.get(Texture::Avatar));
-
-	sf::Sprite avatar;
-	if (texture != nullptr)
-		avatar.setTexture(*texture);
-
 	sf::Clock clock;
 	while (mWindow.isOpen())
 	{
@@ -92,11 +81,12 @@ void endless_runner::run()
 			break;
 
 		stateMachine_.update(0.f);
+		mWorld.update(deltatime);
 
 		// note: here we will eventually draw sprites et al.
 		mWindow.clear();
 
-		mWindow.draw(avatar);
+		mWorld.draw();
 
 		mWindow.display();
 	}

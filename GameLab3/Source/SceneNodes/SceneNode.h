@@ -6,8 +6,7 @@
 #include <SFML/Graphics.hpp>
 
 class SceneNode
-	: public std::enable_shared_from_this<SceneNode>,
-	public sf::Transformable, public sf::Drawable, private sf::NonCopyable
+	: public sf::Transformable, public sf::Drawable, private sf::NonCopyable
 {
 public:
 	SceneNode();
@@ -17,18 +16,29 @@ public:
 
 	std::unique_ptr<SceneNode> detachChild(const SceneNode& node);
 
-	void setParent(std::shared_ptr<SceneNode> parent) { mParent = parent; }
+	void setParent(SceneNode* parent) { mParent = parent; }
 
-	void resetParent() { mParent.reset(); }
+	void resetParent() { mParent = nullptr; }
+
+	void update(float deltaTime);
+
+	sf::Transform getWorldTransform() const;
+
+	sf::Vector2f getWorldPosition() const;
 
 protected:
 	virtual void drawSelf(sf::RenderTarget& target, sf::RenderStates states) const;
 
+	virtual void updateSelf(float deltaTime);
+
 private:
 	void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 
+	void updateChildren(float deltaTime);
+
+private:
 	std::vector<std::unique_ptr<SceneNode>> mChildren;
 
-	std::shared_ptr<SceneNode> mParent;
+	SceneNode* mParent;
 };
 
