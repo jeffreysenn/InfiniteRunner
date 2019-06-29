@@ -8,6 +8,7 @@
 #include "../ResourceManagers/ResourceIdentifiers.h"
 #include "../SceneNodes/SceneNode.h"
 
+
 class World : private sf::NonCopyable
 {
 public:
@@ -33,13 +34,12 @@ private:
 
 private:
 	sf::RenderWindow &mWindow;
-	sf::View mWorldView;
+	class CameraActor* mCamera;
 	TextureManager mTextureManager;
 	SceneNode mSceneGraph;
 	std::array<SceneNode*, LayerCount> mSceneLayers;
 	class AvatarActor* mAvatarActor;
-	sf::FloatRect mWorldBounds;
 	sf::Vector2f mSpawnPosition;
-	float mScrollSpeed;
+	sf::Vector2f mScrollVelocity;
 };
 

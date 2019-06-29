@@ -8,6 +8,11 @@ SpriteActor::SpriteActor(const sf::Texture& texture)
 	mSprite.setOrigin(rect.width / 2, rect.height / 2);
 }
 
+SpriteActor::SpriteActor(const sf::Texture & texture, const sf::IntRect & rect)
+	: mSprite(texture, rect)
+{
+}
+
 
 SpriteActor::~SpriteActor()
 {

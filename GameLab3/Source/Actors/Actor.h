@@ -18,7 +18,7 @@ public:
 
 	virtual void updateSelf(float deltaTime) override;
 
-private:
+protected:
 	sf::Vector2f mVelocity;
 };
 

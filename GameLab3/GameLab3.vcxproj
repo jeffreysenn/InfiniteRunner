@@ -95,6 +95,9 @@ IF %ERRORLEVEL% LEQ 1 exit 0</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Source\Actors\CameraActor.cpp" />
+    <ClCompile Include="Source\Actors\ScrollingBackgroundActor.cpp" />
+    <ClCompile Include="Source\Game.cpp" />
     <ClCompile Include="Source\Actors\AvatarActor.cpp" />
     <ClCompile Include="Source\SceneNodes\SceneNode.cpp" />
     <ClCompile Include="Source\Actors\Actor.cpp" />
@@ -115,6 +118,9 @@ IF %ERRORLEVEL% LEQ 1 exit 0</Command>
     <ClCompile Include="Source\Worlds\World.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Source\Actors\CameraActor.h" />
+    <ClInclude Include="Source\Actors\ScrollingBackgroundActor.h" />
+    <ClInclude Include="Source\Game.h" />
     <ClInclude Include="Source\Actors\AvatarActor.h" />
     <ClInclude Include="Source\ResourceManagers\ResourceIdentifiers.h" />
     <ClInclude Include="Source\SceneNodes\SceneNode.h" />

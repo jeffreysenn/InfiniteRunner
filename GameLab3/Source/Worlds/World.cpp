@@ -1,18 +1,17 @@
 #include "World.h"
 
-#include "../SceneNodes/SpriteNode.h"
+#include "../Actors/ScrollingBackgroundActor.h"
+#include "../Actors/CameraActor.h"
 #include "../Actors/AvatarActor.h"
 
 World::World(sf::RenderWindow &window)
 	: mWindow(window)
-	, mWorldView(mWindow.getDefaultView())
-	, mWorldBounds( 0.f, 0.f, 5000.f, mWorldView.getSize().y)
-	, mSpawnPosition( mWorldView.getSize().x / 3, mWorldBounds.height * 2 / 3 )
+	, mCamera(nullptr)
 	, mAvatarActor(nullptr)
+	, mScrollVelocity(30.f, 0)
 {
 	loadTextures();
 	buildScene();
-
 	//mWorldView.setCenter(mSpawnPosition);
 }
 
@@ -32,13 +31,18 @@ void World::buildScene()
 		mSceneGraph.attachChild(std::move(node));
 	}
 
+	// Create a camera
+	std::unique_ptr<CameraActor> cameraActor(std::make_unique<CameraActor>());
+	mCamera = cameraActor.get();
+	cameraActor->setSize(1280, 720);
+
 	// Get back texture and setup repeated
 	auto backtTxture = mTextureManager.get(Texture::Back);
-	sf::IntRect textureRect(mWorldBounds);
+	//sf::IntRect textureRect(0, 0, (int) mWorldView.getSize().x, (int)mWorldView.getSize().y);
 	backtTxture->setRepeated(true);
 	// Create and attach backgroundNode to layer
-	std::unique_ptr<SpriteNode> backgroundNode(std::make_unique<SpriteNode>(*backtTxture, textureRect));
-	backgroundNode->setPosition(mWorldBounds.left, mWorldBounds.top);
+	std::unique_ptr<ScrollingBackgroundActor> backgroundNode(std::make_unique<ScrollingBackgroundActor>(*backtTxture, *mCamera, mScrollVelocity));
+	backgroundNode->setPosition(mCamera->getCenter());
 	mSceneLayers[Background]->attachChild(std::move(backgroundNode));
 
 	// Create and attach avatarActor to layer
@@ -46,20 +50,23 @@ void World::buildScene()
 	std::unique_ptr<AvatarActor> avatarActor(std::make_unique<AvatarActor>(*avatarTexture));
 	mAvatarActor = avatarActor.get();
 	mAvatarActor->setPosition(mSpawnPosition);
-	mAvatarActor->setVelocity(40.f, 0);
+	mAvatarActor->setVelocity(100, 100);
+	// Attach mCamera to avatarActor
+	sf::Vector2f cameraOffset(250, -150);
+	cameraActor->setPosition(cameraOffset);
+	mAvatarActor->attachChild(std::move(cameraActor));
 	mSceneLayers[Foreground]->attachChild(std::move(avatarActor));
+
 }
 
 void World::update(float deltaTime)
 {
-	mWorldView.move(30.f * deltaTime, 0.f);
-
 	mSceneGraph.update(deltaTime);
 }
 
 void World::draw()
 {
-	mWindow.setView(mWorldView);
+	mWindow.setView(*mCamera);
 	mWindow.draw(mSceneGraph);
 }
 

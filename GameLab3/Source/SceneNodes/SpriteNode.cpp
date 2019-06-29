@@ -1,7 +1,8 @@
 #include "SpriteNode.h"
 
 SpriteNode::SpriteNode(const sf::Texture & texture)
-	:mSprite(texture)
+	: SceneNode()
+	, mSprite(texture)
 {
 }
 

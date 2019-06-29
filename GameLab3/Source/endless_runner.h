@@ -37,7 +37,6 @@ private:
    TextureManager mTextureManager;
    StateMachine stateMachine_;
    World mWorld;
-
 };
 
 #endif // ENDLESS_RUNNER_H_INCLUDED
