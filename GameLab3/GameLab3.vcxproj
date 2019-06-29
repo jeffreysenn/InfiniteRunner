@@ -95,6 +95,7 @@ IF %ERRORLEVEL% LEQ 1 exit 0</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Source\Rendering\Renderer.cpp" />
     <ClCompile Include="Source\Actors\CameraActor.cpp" />
     <ClCompile Include="Source\Actors\ScrollingBackgroundActor.cpp" />
     <ClCompile Include="Source\Game.cpp" />
@@ -114,14 +115,15 @@ IF %ERRORLEVEL% LEQ 1 exit 0</Command>
     <ClCompile Include="Source\States\State.cpp" />
     <ClCompile Include="Source\States\StateMachine.cpp" />
     <ClCompile Include="Source\Actors\SpriteActor.cpp" />
-    <ClCompile Include="Source\SceneNodes\SpriteNode.cpp" />
     <ClCompile Include="Source\Worlds\World.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Source\Rendering\Renderer.h" />
     <ClInclude Include="Source\Actors\CameraActor.h" />
     <ClInclude Include="Source\Actors\ScrollingBackgroundActor.h" />
     <ClInclude Include="Source\Game.h" />
     <ClInclude Include="Source\Actors\AvatarActor.h" />
+    <ClInclude Include="Source\Rendering\RenderInfo.h" />
     <ClInclude Include="Source\ResourceManagers\ResourceIdentifiers.h" />
     <ClInclude Include="Source\SceneNodes\SceneNode.h" />
     <ClInclude Include="Source\Actors\Actor.h" />
@@ -141,7 +143,6 @@ IF %ERRORLEVEL% LEQ 1 exit 0</Command>
     <ClInclude Include="Source\States\StateMachine.h" />
     <ClInclude Include="Source\Input\InputCode.h" />
     <ClInclude Include="Source\Actors\SpriteActor.h" />
-    <ClInclude Include="Source\SceneNodes\SpriteNode.h" />
     <ClInclude Include="Source\Worlds\World.h" />
   </ItemGroup>
   <ItemGroup>

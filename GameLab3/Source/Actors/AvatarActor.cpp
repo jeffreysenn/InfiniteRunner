@@ -2,8 +2,8 @@
 
 
 
-AvatarActor::AvatarActor(const sf::Texture& texture)
-	:SpriteActor(texture)
+AvatarActor::AvatarActor(const sf::Texture& texture, Rendering::Layer layer)
+	: SpriteActor(texture, layer)
 {
 }
 

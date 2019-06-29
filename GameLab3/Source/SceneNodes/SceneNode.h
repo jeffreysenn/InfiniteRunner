@@ -2,11 +2,12 @@
 
 #include <memory>
 #include <vector>
-#include <SFML/System.hpp>
-#include <SFML/Graphics.hpp>
+#include <SFML/Graphics/RenderStates.hpp>
+#include <SFML/System/NonCopyable.hpp>
+#include <SFML/Graphics/Transformable.hpp>
 
 class SceneNode
-	: public sf::Transformable, public sf::Drawable, private sf::NonCopyable
+	: public sf::Transformable, private sf::NonCopyable
 {
 public:
 	SceneNode();
@@ -22,19 +23,21 @@ public:
 
 	void update(float deltaTime);
 
+	void reportRenderInfo(class Renderer &renderer, sf::RenderStates states = sf::RenderStates::Default) const;
+
 	sf::Transform getWorldTransform() const;
 
 	sf::Vector2f getWorldPosition() const;
 
 protected:
-	virtual void drawSelf(sf::RenderTarget& target, sf::RenderStates states) const;
-
 	virtual void updateSelf(float deltaTime);
 
-private:
-	void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
+	virtual void reportRenderInfoSelf(class Renderer &renderer, sf::RenderStates states) const;
 
+private:
 	void updateChildren(float deltaTime);
+
+	void reportRenderInfoChildren(class Renderer &renderer, sf::RenderStates states) const;
 
 private:
 	std::vector<std::unique_ptr<SceneNode>> mChildren;

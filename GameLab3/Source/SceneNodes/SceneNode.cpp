@@ -3,11 +3,12 @@
 #include <algorithm>
 #include <cassert>
 
+#include "../Rendering/Renderer.h"
+
 SceneNode::SceneNode()
 	: mParent(nullptr)
 {
 }
-
 
 SceneNode::~SceneNode()
 {
@@ -34,26 +35,43 @@ std::unique_ptr<SceneNode> SceneNode::detachChild(const SceneNode &node)
 	return std::move(*found);
 }
 
-void SceneNode::draw(sf::RenderTarget & target, sf::RenderStates states) const
-{
-	states.transform *= getTransform();
-
-	drawSelf(target, states);
-
-	for (auto const &child : mChildren)
-	{
-		child->draw(target, states);
-	}
-}
-
-void SceneNode::drawSelf(sf::RenderTarget & target, sf::RenderStates states) const
-{
-}
-
 void SceneNode::update(float deltaTime)
 {
 	updateSelf(deltaTime);
 	updateChildren(deltaTime);
+}
+
+void SceneNode::updateSelf(float deltaTime)
+{
+}
+
+void SceneNode::updateChildren(float deltaTime)
+{
+	for (auto const &child : mChildren)
+	{
+		child->update(deltaTime);
+	}
+}
+
+void SceneNode::reportRenderInfo(Renderer & renderer, sf::RenderStates states) const
+{
+	states.transform *= getTransform();
+
+	reportRenderInfoSelf(renderer, states);
+
+	reportRenderInfoChildren(renderer, states);
+}
+
+void SceneNode::reportRenderInfoSelf(Renderer & renderer, sf::RenderStates states) const
+{
+}
+
+void SceneNode::reportRenderInfoChildren(Renderer & renderer, sf::RenderStates states) const
+{
+	for (auto const &child : mChildren)
+	{
+		child->reportRenderInfo(renderer, states);
+	}
 }
 
 sf::Transform SceneNode::getWorldTransform() const
@@ -73,15 +91,4 @@ sf::Vector2f SceneNode::getWorldPosition() const
 }
 
 
-void SceneNode::updateSelf(float deltaTime)
-{
-}
-
-void SceneNode::updateChildren(float deltaTime)
-{
-	for (auto const &child: mChildren)
-	{
-		child->update(deltaTime);
-	}
-}
 

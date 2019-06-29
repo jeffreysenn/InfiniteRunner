@@ -2,18 +2,14 @@
 
 
 
-ScrollingBackgroundActor::ScrollingBackgroundActor(const sf::Texture& texture, const sf::View& view, sf::Vector2f velocity)
-	: SpriteActor(texture)
-	, mView(view)
+ScrollingBackgroundActor::ScrollingBackgroundActor(const sf::Texture& texture, Rendering::Layer layer)
+	: SpriteActor(texture, layer)
 {
-	setVelocity(velocity);
 }
 
-ScrollingBackgroundActor::ScrollingBackgroundActor(const sf::Texture & texture, const sf::IntRect & rect, const sf::View & view, sf::Vector2f velocity)
-	: SpriteActor(texture, rect)
-	, mView(view)
+ScrollingBackgroundActor::ScrollingBackgroundActor(const sf::Texture &texture, const sf::IntRect & rect, Rendering::Layer layer)
+	: SpriteActor(texture, rect, layer)
 {
-	setVelocity(velocity);
 }
 
 ScrollingBackgroundActor::~ScrollingBackgroundActor()
@@ -26,13 +22,3 @@ void ScrollingBackgroundActor::updateSelf(float deltaTime)
 
 	mSprite.setTextureRect(sf::IntRect((int)(mSprite.getTextureRect().left+10), 0, mSprite.getTextureRect().width, mSprite.getTextureRect().height));
 }
-
-sf::IntRect ScrollingBackgroundActor::getViewIntRect(const sf::View & View)
-{
-	return sf::IntRect(0,
-					   0,
-					   (int)mView.getSize().x,
-					   (int)mView.getSize().y);
-}
-
-
