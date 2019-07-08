@@ -8,6 +8,6 @@ public:
 	LoadState(class StateMachine& stateMachine);
 	~LoadState();
 
-	void update(float deltaTime) override;
+	void update(float deltaSeconds) override;
 };
 

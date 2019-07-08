@@ -19,9 +19,11 @@ public:
 
 	void setParent(SceneNode* parent) { mParent = parent; }
 
+	const SceneNode* getParent() const { return mParent; }
+
 	void resetParent() { mParent = nullptr; }
 
-	void update(float deltaTime);
+	void update(float deltaSeconds);
 
 	void reportRenderInfo(class Renderer &renderer, sf::RenderStates states = sf::RenderStates::Default) const;
 
@@ -30,12 +32,12 @@ public:
 	sf::Vector2f getWorldPosition() const;
 
 protected:
-	virtual void updateSelf(float deltaTime);
+	virtual void updateSelf(float deltaSeconds);
 
 	virtual void reportRenderInfoSelf(class Renderer &renderer, sf::RenderStates states) const;
 
 private:
-	void updateChildren(float deltaTime);
+	void updateChildren(float deltaSeconds);
 
 	void reportRenderInfoChildren(class Renderer &renderer, sf::RenderStates states) const;
 

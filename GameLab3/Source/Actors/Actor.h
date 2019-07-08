@@ -16,7 +16,10 @@ public:
 
 	sf::Vector2f getVelocity() const { return mVelocity; }
 
-	virtual void updateSelf(float deltaTime) override;
+	sf::Vector2f getWorldVelocity() const;
+
+protected:
+	virtual void updateSelf(float deltaSeconds) override;
 
 protected:
 	sf::Vector2f mVelocity;

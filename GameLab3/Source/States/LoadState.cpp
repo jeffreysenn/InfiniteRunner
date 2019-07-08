@@ -13,7 +13,7 @@ LoadState::~LoadState()
 {
 }
 
-void LoadState::update(float deltaTime)
+void LoadState::update(float deltaSeconds)
 {
 	stateMachine_.pushState(std::make_unique<MenuState>(stateMachine_));
 }

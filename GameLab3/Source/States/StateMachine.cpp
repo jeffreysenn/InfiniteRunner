@@ -37,9 +37,9 @@ void StateMachine::popState()
 	states_.pop();
 }
 
-void StateMachine::update(float deltaTime)
+void StateMachine::update(float deltaSeconds)
 {
-	states_.top()->update(deltaTime);
+	states_.top()->update(deltaSeconds);
 }
 
 void StateMachine::onInput(input_state_delta & input)

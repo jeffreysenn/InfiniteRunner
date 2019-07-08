@@ -16,7 +16,7 @@ class World : private sf::NonCopyable
 public:
 	explicit World(sf::RenderWindow& window);
 
-	void update(float deltaTime);
+	void update(float deltaSeconds);
 
 	void draw();
 
@@ -32,7 +32,7 @@ private:
 	TextureManager mTextureManager;
 	SceneNode mSceneGraph;
 	class AvatarActor* mAvatarActor;
-	sf::Vector2f mSpawnPosition = sf::Vector2f(-100.f, 70.f);
+	sf::Vector2f mSpawnPosition = sf::Vector2f(0, -20);
 	sf::Vector2f mScrollVelocity;
 };
 

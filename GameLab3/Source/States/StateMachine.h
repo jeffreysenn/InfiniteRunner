@@ -16,7 +16,7 @@ public:
 	void pushState(std::unique_ptr<State> state);
 	void popState();
 
-	void update(float deltaTime);
+	void update(float deltaSeconds);
 
 	void onInput(struct input_state_delta &input);
 

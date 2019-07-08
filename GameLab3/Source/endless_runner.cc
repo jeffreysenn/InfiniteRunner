@@ -13,7 +13,7 @@
 
 template <typename T> T min(T a, T b) { return a < b ? a : b; }
 
-static float get_deltatime(sf::Clock &clock)
+static float get_deltaSeconds(sf::Clock &clock)
 {
 	sf::Time diff = clock.restart();
 	float dt = min(diff.asSeconds(), 1.0f / 60.0f);
@@ -21,7 +21,7 @@ static float get_deltatime(sf::Clock &clock)
 }
 
 endless_runner::endless_runner()
-	: mWindow(sf::VideoMode(1280, 720), "endless-runner", sf::Style::Titlebar | sf::Style::Close)
+	: mWindow(sf::VideoMode(1920, 1080), "endless-runner", sf::Style::Titlebar | sf::Style::Close)
 	, input_manager_(mWindow)
 	, mWorld(mWindow)
 {
@@ -36,7 +36,7 @@ bool endless_runner::init()
 	mWindow.setVerticalSyncEnabled(true);
 
 	// note: initialize state machine
-	stateMachine_.init();
+	mStateMachine.init();
 
 	// note: base input context for global game
 	auto context = input_manager_.create_context("base");
@@ -69,10 +69,10 @@ void endless_runner::run()
 	while (mWindow.isOpen())
 	{
 		// note: calculate delta time
-		float deltatime = get_deltatime(clock);
+		float deltaSeconds = get_deltaSeconds(clock);
 
 		// note: quite the loop if state is quit
-		if (stateMachine_.isStateQuit()) { break; }
+		if (mStateMachine.isStateQuit()) { break; }
 
 		// note: the input manager handles the polling of 
 		//       all sf::Events and dispatching the changes
@@ -80,8 +80,8 @@ void endless_runner::run()
 		if (!input_manager_.process())
 			break;
 
-		stateMachine_.update(0.f);
-		mWorld.update(deltatime);
+		mStateMachine.update(0.f);
+		mWorld.update(deltaSeconds);
 
 		// note: here we will eventually draw sprites et al.
 		mWindow.clear();
@@ -102,7 +102,7 @@ void endless_runner::exit()
 // input_listener
 bool endless_runner::on_input(input_state_delta &input)
 {
-	stateMachine_.onInput(input);
+	mStateMachine.onInput(input);
 
 	return true;
 }

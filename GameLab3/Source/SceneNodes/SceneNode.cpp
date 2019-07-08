@@ -35,21 +35,21 @@ std::unique_ptr<SceneNode> SceneNode::detachChild(const SceneNode &node)
 	return std::move(*found);
 }
 
-void SceneNode::update(float deltaTime)
+void SceneNode::update(float deltaSeconds)
 {
-	updateSelf(deltaTime);
-	updateChildren(deltaTime);
+	updateSelf(deltaSeconds);
+	updateChildren(deltaSeconds);
 }
 
-void SceneNode::updateSelf(float deltaTime)
+void SceneNode::updateSelf(float deltaSeconds)
 {
 }
 
-void SceneNode::updateChildren(float deltaTime)
+void SceneNode::updateChildren(float deltaSeconds)
 {
 	for (auto const &child : mChildren)
 	{
-		child->update(deltaTime);
+		child->update(deltaSeconds);
 	}
 }
 

@@ -6,7 +6,7 @@ public:
 
 	virtual ~State() = default;
 
-	virtual void update(float deltaTime) {}
+	virtual void update(float deltaSeconds) {}
 
 	virtual void onInput(struct input_state_delta &input);
 

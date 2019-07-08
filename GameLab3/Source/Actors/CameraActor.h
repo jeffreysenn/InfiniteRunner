@@ -8,6 +8,5 @@ public:
 	CameraActor();
 	~CameraActor();
 
-	virtual void updateSelf(float deltaTime) override;
+	virtual void updateSelf(float deltaSeconds) override;
 };
-

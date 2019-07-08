@@ -35,7 +35,7 @@ private:
    input_manager input_manager_;
 
    TextureManager mTextureManager;
-   StateMachine stateMachine_;
+   StateMachine mStateMachine;
    World mWorld;
 };
 
