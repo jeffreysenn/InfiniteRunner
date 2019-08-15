@@ -1,18 +1,18 @@
 #include "SceneNode.h"
 
+#include "../Rendering/Renderer.h"
+#include "../Commands/Command.h"
+
 #include <algorithm>
 #include <cassert>
 
-#include "../Rendering/Renderer.h"
 
 SceneNode::SceneNode()
 	: mParent(nullptr)
+	, mCategory(Category::Scene)
 {
 }
 
-SceneNode::~SceneNode()
-{
-}
 
 void SceneNode::attachChild(std::unique_ptr<SceneNode> node)
 {
@@ -48,9 +48,7 @@ void SceneNode::updateSelf(float deltaSeconds)
 void SceneNode::updateChildren(float deltaSeconds)
 {
 	for (auto const &child : mChildren)
-	{
 		child->update(deltaSeconds);
-	}
 }
 
 void SceneNode::reportRenderInfo(Renderer & renderer, sf::RenderStates states) const
@@ -69,9 +67,16 @@ void SceneNode::reportRenderInfoSelf(Renderer & renderer, sf::RenderStates state
 void SceneNode::reportRenderInfoChildren(Renderer & renderer, sf::RenderStates states) const
 {
 	for (auto const &child : mChildren)
-	{
 		child->reportRenderInfo(renderer, states);
-	}
+}
+
+void SceneNode::onCommand(const Command & command, float deltaSeconds)
+{
+	if ((command.category & mCategory) != Category::None)
+		command.action(*this, deltaSeconds);
+
+	for (auto const &child : mChildren)
+		child->onCommand(command, deltaSeconds);
 }
 
 sf::Transform SceneNode::getWorldTransform() const
@@ -79,9 +84,8 @@ sf::Transform SceneNode::getWorldTransform() const
 	sf::Transform transform = sf::Transform::Identity;
 
 	for (const SceneNode* node = this; node != nullptr; node = node->mParent)
-	{
 		transform *= node->getTransform();
-	}
+
 	return transform;
 }
 

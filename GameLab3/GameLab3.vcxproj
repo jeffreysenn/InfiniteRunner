@@ -95,6 +95,8 @@ IF %ERRORLEVEL% LEQ 1 exit 0</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Source\Controllers\PlayerController.cpp" />
+    <ClCompile Include="Source\Debug\FPSMeter.cpp" />
     <ClCompile Include="Source\Input\Input.cpp" />
     <ClCompile Include="Source\Rendering\Renderer.cpp" />
     <ClCompile Include="Source\Actors\CameraActor.cpp" />
@@ -119,6 +121,12 @@ IF %ERRORLEVEL% LEQ 1 exit 0</Command>
     <ClCompile Include="Source\Worlds\World.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Source\Controllers\PlayerController.h" />
+    <ClInclude Include="Source\Debug\FPSMeter.h" />
+    <ClInclude Include="Source\Commands\CommandQueue.h" />
+    <ClInclude Include="Source\Commands\Category.h" />
+    <ClInclude Include="Source\Commands\Command.h" />
+    <ClInclude Include="Source\Commands\Flags.h" />
     <ClInclude Include="Source\Input\Input.h" />
     <ClInclude Include="Source\Input\InputBinding.h" />
     <ClInclude Include="Source\Rendering\Renderer.h" />

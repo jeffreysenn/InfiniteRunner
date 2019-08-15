@@ -4,14 +4,21 @@
 #include "../Actors/CameraActor.h"
 #include "../Actors/AvatarActor.h"
 
+#include <iostream>
+
 World::World(sf::RenderWindow &window)
 	: mWindow(window)
 	, mCamera(nullptr)
 	, mAvatarActor(nullptr)
 	, mScrollVelocity(30.f, 0)
 {
-	loadTextures();
+	loadResources();
 	buildScene();
+}
+
+void World::loadResources()
+{
+	loadTextures();
 }
 
 void World::loadTextures()
@@ -81,6 +88,9 @@ void World::buildScene()
 
 void World::update(float deltaSeconds)
 {
+	while (!mCommandQueue.isEmpty())
+		mSceneGraph.onCommand(mCommandQueue.pop(), deltaSeconds);
+
 	mSceneGraph.update(deltaSeconds);
 }
 

@@ -1,12 +1,6 @@
 #include "Actor.h"
 
 Actor::Actor()
-	: SceneNode()
-{
-}
-
-
-Actor::~Actor()
 {
 }
 

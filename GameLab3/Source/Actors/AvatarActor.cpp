@@ -8,6 +8,7 @@ AvatarActor::AvatarActor(
 	Rendering::Layer layer)
 	: SpriteActor(texture, layer)
 {
+	mCategory = Category::Avatar;
 }
 
 AvatarActor::AvatarActor(
@@ -16,23 +17,25 @@ AvatarActor::AvatarActor(
 	Rendering::Layer layer)
 	: SpriteActor(texture, rect, layer)
 {
+	mCategory = Category::Avatar;
 }
 
-AvatarActor::~AvatarActor()
+void AvatarActor::jump()
 {
+	mLocalVel.y = -50;
 }
 
 void AvatarActor::updateSelf(float deltaSeconds)
 {
-	if (Input::dataPressed(InputBinding::Jump))
-	{
-		mLocalVel = sf::Vector2f(0, -50);
-	}
+	//if (Input::dataPressed(InputBinding::Jump))
+	//{
+	//	jump();
+	//}
 
-	if (Input::dataPressed(InputBinding::Down))
-	{
-		mLocalVel = sf::Vector2f(0, 50);
-	}
+	//if (Input::dataPressed(InputBinding::Down))
+	//{
+	//	mLocalVel = sf::Vector2f(0, 50);
+	//}
 
 	setVelocity(mBaseVel + mLocalVel);
 

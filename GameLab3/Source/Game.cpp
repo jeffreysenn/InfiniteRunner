@@ -1,19 +1,20 @@
 ﻿#include "Game.h"
+#include "Commands/CommandQueue.h"
 
 #include <SFML/Window/Event.hpp>
 #include <SFML/Graphics/Color.hpp>
 #include <string>  
 
 const sf::Time updateInterval = sf::seconds(1.f / 60.f);
-const sf::Time statsUpdateInterval = sf::seconds(.5f);
 
 Game::Game()
-	: mWindow(
+try : mWindow(
 	sf::VideoMode(1920, 1080),
 	"Endless Runner",
 	sf::Style::Titlebar | sf::Style::Close)
 	, mWorld(mWindow)
-	, mBPaused(false)
+	, mFPSMeter(&mStatsText)
+	, mbPaused(false)
 {
 	mWindow.setKeyRepeatEnabled(true);
 
@@ -22,6 +23,12 @@ Game::Game()
 	mStatsText.setCharacterSize(20);
 	mStatsText.setPosition(10, 10);
 	mStatsText.setFillColor(sf::Color::Magenta);
+}
+catch (const std::runtime_error& e)
+{
+	std::cout << "Exception: " << e.what() << std::endl;
+	// making sure the world is constructed successfully
+	std::terminate();
 }
 
 Game::~Game()
@@ -33,9 +40,6 @@ void Game::run()
 	sf::Clock clock;
 	sf::Time timeSinceLastUpdate = sf::Time::Zero;
 
-	sf::Time timeSinceLastStatsUpdate = sf::Time::Zero;
-	uint32_t statsFrameCount = 0;
-
 	while (mWindow.isOpen())
 	{
 		sf::Time lastLoopDuration = clock.restart();
@@ -46,52 +50,46 @@ void Game::run()
 		while (timeSinceLastUpdate > updateInterval)
 		{
 			timeSinceLastUpdate -= updateInterval;
-			handleEvents();
+			handleInputs();
 			update(updateInterval.asSeconds());
 		}
 
-		// Update states
-		statsFrameCount++;
-		timeSinceLastStatsUpdate += lastLoopDuration;
-		while (timeSinceLastStatsUpdate > statsUpdateInterval)
-		{
-			uint32_t fps = (uint32_t)(statsFrameCount / statsUpdateInterval.asSeconds());
-			uint32_t ft = (uint32_t)(timeSinceLastStatsUpdate.asMicroseconds() / statsFrameCount);
-			mStatsText.setString("FPS : " + std::to_string(fps) + "\n" +
-								 "FT : " + std::to_string(ft) + " us");
-
-			timeSinceLastStatsUpdate -= statsUpdateInterval;
-			statsFrameCount = 0;
-		}
+		mFPSMeter.update(lastLoopDuration);
 
 		render();
 	}
 }
 
-void Game::handleEvents()
+void Game::handleInputs()
 {
+	CommandQueue& commandQueue = mWorld.getCommandQueue();
+
 	sf::Event event;
 	while (mWindow.pollEvent(event))
 	{
 		// Closing window events
 		if (event.type == sf::Event::Closed)
 			mWindow.close();
-		
+
 		if (event.type == sf::Event::KeyPressed
 			&& event.key.code == sf::Keyboard::Escape)
 			mWindow.close();
 
 		// Focus events
 		if (event.type == sf::Event::LostFocus)
-			mBPaused = true;
+			mbPaused = true;
 		else if (event.type == sf::Event::GainedFocus)
-			mBPaused = false;
+			mbPaused = false;
+
+		mPlayerController.handleEvent(event, commandQueue);
 	}
+
+	mPlayerController.handleRealtimeInput(commandQueue);
 }
 
 void Game::update(float deltaSeconds)
 {
-	if (mBPaused)
+	if (mbPaused)
 		return;
 	mWorld.update(deltaSeconds);
 }

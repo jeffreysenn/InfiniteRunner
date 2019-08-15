@@ -4,6 +4,7 @@
 #include "../ResourceManagers/ResourceIdentifiers.h"
 #include "../SceneNodes/SceneNode.h"
 #include "../Rendering/Renderer.h"
+#include "../Commands/CommandQueue.h"
 
 #include <array>
 #include <memory>
@@ -20,8 +21,11 @@ public:
 
 	void draw();
 
+	CommandQueue& getCommandQueue() { return mCommandQueue; }
 private:
+	void loadResources();
 	void loadTextures();
+
 	void buildScene();
 
 private:
@@ -34,5 +38,6 @@ private:
 	class AvatarActor* mAvatarActor;
 	sf::Vector2f mSpawnPosition = sf::Vector2f(0, -20);
 	sf::Vector2f mScrollVelocity;
+	CommandQueue mCommandQueue;
 };
 

@@ -1,6 +1,8 @@
 #pragma once
 
 #include "Worlds/World.h"
+#include "Debug/FPSMeter.h"
+#include "Controllers/PlayerController.h"
 
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/Graphics/Text.hpp>
@@ -14,7 +16,7 @@ public:
 
 	void run();
 
-	void handleEvents();
+	void handleInputs();
 
 	void update(float deltaSeconds);
 
@@ -23,6 +25,8 @@ public:
 private:
 	sf::RenderWindow mWindow;
 
+	PlayerController mPlayerController;
+
 	//StateMachine mStateMachine;
 
 	World mWorld;
@@ -30,7 +34,8 @@ private:
 	sf::Font mFont;
 
 	sf::Text mStatsText;
+	FPSMeter mFPSMeter;
 
-	bool mBPaused;
+	bool mbPaused;
 };
 
