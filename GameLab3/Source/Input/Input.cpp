@@ -1,18 +1,18 @@
 #include "Input.h"
 
-bool Input::datumPressed(const InputDatum &datum)
+bool inputPressed(const Input::Input &input)
 {
-	switch (datum.inputType)
+	switch (input.type)
 	{
 	// TODO: Implement Joystick index to support multiple joysticks
-	case InputType::Joystick:
-		return sf::Joystick::isButtonPressed(0, datum.joystickButtonID);
+	case Input::Type::Joystick:
+		return sf::Joystick::isButtonPressed(0, input.joystickButtonID);
 		break;
-	case InputType::Keyboard:
-		return sf::Keyboard::isKeyPressed(datum.keyboardKey);
+	case Input::Type::Keyboard:
+		return sf::Keyboard::isKeyPressed(input.keyboardKey);
 		break;
-	case InputType::Mouse:
-		return sf::Mouse::isButtonPressed(datum.mouseButton);
+	case Input::Type::Mouse:
+		return sf::Mouse::isButtonPressed(input.mouseButton);
 		break;
 	default:
 		break;
@@ -21,12 +21,13 @@ bool Input::datumPressed(const InputDatum &datum)
 	return false;
 }
 
-bool Input::dataPressed(const std::vector<InputDatum> &inputData)
+bool Input::inputCollectionPressed(const InputCollection &inputCollection)
 {
-	for (auto &inputDatum : inputData)
+	for (auto &input : inputCollection)
 	{
-		if (datumPressed(inputDatum))
+		if (inputPressed(input))
 			return true;
 	}
 	return false;
 }
+

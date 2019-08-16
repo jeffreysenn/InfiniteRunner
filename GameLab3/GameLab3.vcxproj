@@ -110,10 +110,6 @@ IF %ERRORLEVEL% LEQ 1 exit 0</Command>
     <ClCompile Include="Source\States\PlayState.cpp" />
     <ClCompile Include="Source\States\QuitState.cpp" />
     <ClCompile Include="Source\States\LoadState.cpp" />
-    <ClCompile Include="Source\endless_runner.cc" />
-    <ClCompile Include="Source\Input\input_context.cc" />
-    <ClCompile Include="Source\Input\input_manager.cc" />
-    <ClCompile Include="Source\Input\input_state_delta.cc" />
     <ClCompile Include="Source\main.cc" />
     <ClCompile Include="Source\States\State.cpp" />
     <ClCompile Include="Source\States\StateMachine.cpp" />
@@ -128,7 +124,6 @@ IF %ERRORLEVEL% LEQ 1 exit 0</Command>
     <ClInclude Include="Source\Commands\Command.h" />
     <ClInclude Include="Source\Commands\Flags.h" />
     <ClInclude Include="Source\Input\Input.h" />
-    <ClInclude Include="Source\Input\InputBinding.h" />
     <ClInclude Include="Source\Rendering\Renderer.h" />
     <ClInclude Include="Source\Actors\CameraActor.h" />
     <ClInclude Include="Source\Actors\ScrollingBackgroundActor.h" />
@@ -140,19 +135,12 @@ IF %ERRORLEVEL% LEQ 1 exit 0</Command>
     <ClInclude Include="Source\Actors\Actor.h" />
     <ClInclude Include="Source\ResourceManagers\ResourceManager.h" />
     <ClInclude Include="Source\States\DeadState.h" />
-    <ClInclude Include="Source\endless_runner.h" />
-    <ClInclude Include="Source\Input\input_context.h" />
-    <ClInclude Include="Source\Input\input_listener.h" />
-    <ClInclude Include="Source\Input\input_manager.h" />
-    <ClInclude Include="Source\Input\input_state_delta.h" />
-    <ClInclude Include="Source\Input\input_types.h" />
     <ClInclude Include="Source\States\MenuState.h" />
     <ClInclude Include="Source\States\PlayState.h" />
     <ClInclude Include="Source\States\QuitState.h" />
     <ClInclude Include="Source\States\LoadState.h" />
     <ClInclude Include="Source\States\State.h" />
     <ClInclude Include="Source\States\StateMachine.h" />
-    <ClInclude Include="Source\Input\InputCode.h" />
     <ClInclude Include="Source\Actors\SpriteActor.h" />
     <ClInclude Include="Source\Worlds\World.h" />
   </ItemGroup>

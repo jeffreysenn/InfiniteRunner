@@ -9,7 +9,7 @@ const sf::Time updateInterval = sf::seconds(1.f / 60.f);
 
 Game::Game()
 try : mWindow(
-	sf::VideoMode(1920, 1080),
+	sf::VideoMode(960, 540),
 	"Endless Runner",
 	sf::Style::Titlebar | sf::Style::Close)
 	, mWorld(mWindow)

@@ -24,6 +24,7 @@ public:
 	void stopMoving() { mLocalVel = -mBaseVel; }
 
 	void jump();
+	void goStraight();
 
 protected:
 	virtual void updateSelf(float deltaSeconds) override;

@@ -5,18 +5,19 @@
 #include <SFML/Window/Mouse.hpp>
 #include <vector>
 
+
 namespace Input
 {
-	enum class InputType
+	enum class Type
 	{
 		Joystick,
 		Keyboard,
 		Mouse,
 	};
 
-	struct InputDatum
+	struct Input
 	{
-		InputType inputType;
+		Type type;
 
 		union
 		{
@@ -29,8 +30,8 @@ namespace Input
 		};
 	};
 
-	bool dataPressed(const std::vector<InputDatum> &inputData);
+	typedef std::vector<Input> InputCollection;
+	bool inputCollectionPressed(const InputCollection &inputCollection);
 
-	bool datumPressed(const InputDatum &datum);
 }
 

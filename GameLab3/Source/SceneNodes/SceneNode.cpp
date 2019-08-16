@@ -56,7 +56,6 @@ void SceneNode::reportRenderInfo(Renderer & renderer, sf::RenderStates states) c
 	states.transform *= getTransform();
 
 	reportRenderInfoSelf(renderer, states);
-
 	reportRenderInfoChildren(renderer, states);
 }
 

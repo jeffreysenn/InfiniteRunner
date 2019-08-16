@@ -1,7 +1,5 @@
 #include "AvatarActor.h"
 
-#include "../Input/InputBinding.h"
-
 
 AvatarActor::AvatarActor(
 	const sf::Texture &texture, 
@@ -23,6 +21,11 @@ AvatarActor::AvatarActor(
 void AvatarActor::jump()
 {
 	mLocalVel.y = -50;
+}
+
+void AvatarActor::goStraight()
+{
+	mLocalVel = sf::Vector2f(0, 0);
 }
 
 void AvatarActor::updateSelf(float deltaSeconds)

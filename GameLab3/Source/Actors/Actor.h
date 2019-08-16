@@ -13,7 +13,6 @@ public:
 	void setVelocity(float vx, float vy) { mVelocity = sf::Vector2f(vx, vy); }
 
 	sf::Vector2f getVelocity() const { return mVelocity; }
-
 	sf::Vector2f getWorldVelocity() const;
 
 protected:
