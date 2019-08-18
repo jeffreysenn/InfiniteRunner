@@ -13,9 +13,9 @@ Renderer::~Renderer()
 
 void Renderer::draw(sf::RenderTarget & target, sf::RenderStates states) const
 {
-	for (auto &renderInfoVector : mRenderBuffer)
+	for (auto const &renderInfoVector : mRenderBuffer)
 	{
-		for (auto &renderInfo : renderInfoVector)
+		for (auto const &renderInfo : renderInfoVector)
 		{
 			target.draw(*renderInfo.drawable, renderInfo.states);
 		}

@@ -1,18 +1,44 @@
 #include "State.h"
 
-#include "StateMachine.h"
-#include "QuitState.h"
+#include "StateIdentifiers.h"
+#include "StateStack.h"
 
-State::State(StateMachine & stateMachine)
-	:stateMachine_(stateMachine)
+State::Context::Context(
+	sf::RenderWindow & window, TextureManager & textureManager, 
+	FontManager & fontManager, PlayerController & playerController)
+	: window(&window)
+	, textureManager(&textureManager)
+	, fontManager(&fontManager)
+	, playerController(&playerController)
 {
 }
 
-void State::onInput(input_state_delta & input)
+State::State(StateStack & stack, const Context &context)
+	: mStack(stack)
+	, mContext(context)
 {
-	//if (input.has_action(InputCode::EXIT_CODE))
-	//{
-	//	stateMachine_.pushState(std::make_unique<QuitState>(stateMachine_));
-	//	input.eat_action(InputCode::EXIT_CODE);
-	//}
+}
+
+State::~State()
+{
+}
+
+void State::requestStackPush(StateID stateID)
+{
+	mStack.pushState(stateID);
+}
+
+void State::requestStackPop()
+{
+	mStack.popState();
+}
+
+void State::requestStateClear()
+{
+	mStack.clearStates();
+}
+
+State::Context State::getContext() const
+{
+	return mContext;
 }

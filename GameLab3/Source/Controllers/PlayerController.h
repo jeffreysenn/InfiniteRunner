@@ -11,11 +11,7 @@ namespace sf
 	class Event;
 }
 
-enum class Action
-{
-	Jump,
-	Down
-};
+
 
 class PlayerController
 {
@@ -23,7 +19,20 @@ public:
 	PlayerController();
 
 	void handleEvent(const sf::Event& event, class CommandQueue& commandQueue);
-	void handleRealtimeInput(class CommandQueue& commandqueue);
+	void handleRealtimeInput(class CommandQueue& commandQueue);
+
+private:
+	enum class Action
+	{
+		Jump,
+		Down
+	};
+
+	struct GameInput
+	{
+		Input::InputCollection inputCollection;
+		bool bIsRealTime;
+	};
 
 private:
 	void bindInputs();
@@ -32,7 +41,7 @@ private:
 private:
 	Command mCommand;
 
-	std::map<Action, Input::InputCollection> mInputBinding;
+	std::map<Action, GameInput> mInputBinding;
 	std::map<Action, Command> mActionBinding;
 };
 

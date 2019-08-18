@@ -21,28 +21,43 @@ PlayerController::PlayerController()
 
 void PlayerController::handleEvent(const sf::Event & event, CommandQueue & commandQueue)
 {
+	for (auto &pair : mActionBinding)
+	{
+		const auto & gameInput = mInputBinding[pair.first];
+		if ((!gameInput.bIsRealTime) &&
+			Input::eventInputCollectionPressed(event, gameInput.inputCollection))
+			commandQueue.push(pair.second);
+	}
 }
 
-void PlayerController::handleRealtimeInput(CommandQueue &commandqueue)
+void PlayerController::handleRealtimeInput(CommandQueue &commandQueue)
 {
 	for (auto &pair : mActionBinding)
-		if (Input::inputCollectionPressed(mInputBinding[pair.first]))
-			commandqueue.push(pair.second);
+	{
+		const auto & gameInput = mInputBinding[pair.first];
+		if (gameInput.bIsRealTime &&
+			Input::inputCollectionPressed(gameInput.inputCollection))
+			commandQueue.push(pair.second);
+	}
 }
 
 void PlayerController::bindInputs()
 {
 	mInputBinding[Action::Jump] =
 	{
-		{Input::Type::Keyboard, sf::Keyboard::Space},
-		{Input::Type::Keyboard, sf::Keyboard::W},
-		{Input::Type::Keyboard, sf::Keyboard::Up}
+		{
+			{Input::Type::Keyboard, sf::Keyboard::Space},
+			{Input::Type::Keyboard, sf::Keyboard::W},
+			{Input::Type::Keyboard, sf::Keyboard::Up}
+		}, false
 	};
 
 	mInputBinding[Action::Down] =
 	{
-		{Input::Type::Keyboard, sf::Keyboard::S},
-		{Input::Type::Keyboard, sf::Keyboard::Down}
+		{
+			{Input::Type::Keyboard, sf::Keyboard::S},
+			{Input::Type::Keyboard, sf::Keyboard::Down}
+		}, false
 	};
 }
 

@@ -6,7 +6,7 @@
 class FPSMeter
 {
 public:
-	FPSMeter(sf::Text* text);
+	FPSMeter(sf::Text &text);
 
 	void update(sf::Time lastLoopDuration);
 	void updateText(sf::Text text);

@@ -13,17 +13,21 @@ namespace Texture
 		Avatar,
 		Back,
 		Middle,
-		NONEXIST,
+		NONEXIST
 	};
 }
+typedef ResourceManager<sf::Texture, Texture::ID> TextureManager;
+
 
 namespace Font
 {
 	enum ID
 	{
-
+		MineCraft
 	};
 }
+typedef ResourceManager<sf::Font, Font::ID> FontManager;
+
 
 namespace Sound
 {
@@ -33,4 +37,3 @@ namespace Sound
 	};
 }
 
-typedef ResourceManager<sf::Texture, Texture::ID> TextureManager;

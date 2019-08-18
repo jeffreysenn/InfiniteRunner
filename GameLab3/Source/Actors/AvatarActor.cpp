@@ -30,16 +30,6 @@ void AvatarActor::goStraight()
 
 void AvatarActor::updateSelf(float deltaSeconds)
 {
-	//if (Input::dataPressed(InputBinding::Jump))
-	//{
-	//	jump();
-	//}
-
-	//if (Input::dataPressed(InputBinding::Down))
-	//{
-	//	mLocalVel = sf::Vector2f(0, 50);
-	//}
-
 	setVelocity(mBaseVel + mLocalVel);
 
 	SpriteActor::updateSelf(deltaSeconds);

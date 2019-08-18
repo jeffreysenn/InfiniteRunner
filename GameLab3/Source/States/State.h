@@ -1,17 +1,52 @@
 #pragma once
+#include "../ResourceManagers/ResourceIdentifiers.h"
+
+#include <memory>
+
+namespace sf
+{
+	class RenderWindow;
+	class Time;
+	class Event;
+}
+
+class PlayerController;
+class StateStack;
+
 class State
 {
 public:
-	State(class StateMachine& stateMachine);
+	typedef std::unique_ptr<State> Ptr;
 
-	virtual ~State() = default;
+	struct Context
+	{
+		explicit Context(sf::RenderWindow& window, TextureManager& textureManager,
+						 FontManager& fontManager, PlayerController& playerController);
 
-	virtual void update(float deltaSeconds) {}
+		sf::RenderWindow* window;
+		TextureManager* textureManager;
+		FontManager* fontManager;
+		PlayerController* playerController;
+	};
 
-	virtual void onInput(struct input_state_delta &input);
+public:
+	explicit State(StateStack &stack, const Context &context);
+	virtual ~State();
+
+	virtual bool update(float deltaSeconds) { return true; }
+	virtual bool handleEvent(const sf::Event &event) { return true; }
+	virtual void draw() {}
 
 protected:
-	class StateMachine& stateMachine_;
+	void requestStackPush(enum class StateID stateID);
+	void requestStackPop();
+	void requestStateClear();
+
+	Context getContext() const;
+
+private:
+	StateStack &mStack;
+	Context mContext;
 
 };
 

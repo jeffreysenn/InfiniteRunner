@@ -2,11 +2,12 @@
 
 #include "Worlds/World.h"
 #include "Debug/FPSMeter.h"
+#include "States/StateStack.h"
 #include "Controllers/PlayerController.h"
+#include "ResourceManagers/ResourceIdentifiers.h"
 
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/Graphics/Text.hpp>
-//#include "States/StateMachine.h"
 
 class Game
 {
@@ -15,6 +16,9 @@ public:
 	~Game();
 
 	void run();
+
+private:
+	void registerStates();
 
 	void handleInputs();
 
@@ -25,13 +29,12 @@ public:
 private:
 	sf::RenderWindow mWindow;
 
+	StateStack mStateStack;
+
+	TextureManager mTextureManager;
+	FontManager mFontManager;
+
 	PlayerController mPlayerController;
-
-	//StateMachine mStateMachine;
-
-	World mWorld;
-
-	sf::Font mFont;
 
 	sf::Text mStatsText;
 	FPSMeter mFPSMeter;

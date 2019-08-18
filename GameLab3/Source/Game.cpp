@@ -1,5 +1,9 @@
 ﻿#include "Game.h"
-#include "Commands/CommandQueue.h"
+#include "States/State.h"
+#include "States/TitleState.h"
+#include "States/MenuState.h"
+#include "States/GameState.h"
+#include "States/PauseState.h"
 
 #include <SFML/Window/Event.hpp>
 #include <SFML/Graphics/Color.hpp>
@@ -12,17 +16,20 @@ try : mWindow(
 	sf::VideoMode(960, 540),
 	"Endless Runner",
 	sf::Style::Titlebar | sf::Style::Close)
-	, mWorld(mWindow)
-	, mFPSMeter(&mStatsText)
+	, mStateStack(State::Context(mWindow, mTextureManager, mFontManager, mPlayerController))
+	, mFPSMeter(mStatsText)
 	, mbPaused(false)
 {
 	mWindow.setKeyRepeatEnabled(true);
 
-	mFont.loadFromFile("Assets/Fonts/Minecraft.ttf");
-	mStatsText.setFont(mFont);
+	mFontManager.load(Font::MineCraft, "Assets/Fonts/Minecraft.ttf");
+	mStatsText.setFont(*mFontManager.get(Font::MineCraft));
 	mStatsText.setCharacterSize(20);
 	mStatsText.setPosition(10, 10);
 	mStatsText.setFillColor(sf::Color::Magenta);
+
+	registerStates();
+	mStateStack.pushState(StateID::Title);
 }
 catch (const std::runtime_error& e)
 {
@@ -52,6 +59,9 @@ void Game::run()
 			timeSinceLastUpdate -= updateInterval;
 			handleInputs();
 			update(updateInterval.asSeconds());
+
+			if (mStateStack.isEmpty())
+				mWindow.close();
 		}
 
 		mFPSMeter.update(lastLoopDuration);
@@ -60,19 +70,23 @@ void Game::run()
 	}
 }
 
+void Game::registerStates()
+{
+	mStateStack.registerState<TitleState>(StateID::Title);
+	mStateStack.registerState<MenuState>(StateID::Menu);
+	mStateStack.registerState<GameState>(StateID::Game);
+	mStateStack.registerState<PauseState>(StateID::Pause);
+}
+
 void Game::handleInputs()
 {
-	CommandQueue& commandQueue = mWorld.getCommandQueue();
-
 	sf::Event event;
 	while (mWindow.pollEvent(event))
 	{
+		mStateStack.handleEvent(event);
+
 		// Closing window events
 		if (event.type == sf::Event::Closed)
-			mWindow.close();
-
-		if (event.type == sf::Event::KeyPressed
-			&& event.key.code == sf::Keyboard::Escape)
 			mWindow.close();
 
 		// Focus events
@@ -80,25 +94,21 @@ void Game::handleInputs()
 			mbPaused = true;
 		else if (event.type == sf::Event::GainedFocus)
 			mbPaused = false;
-
-		mPlayerController.handleEvent(event, commandQueue);
 	}
-
-	mPlayerController.handleRealtimeInput(commandQueue);
 }
 
 void Game::update(float deltaSeconds)
 {
 	if (mbPaused)
 		return;
-	mWorld.update(deltaSeconds);
+	mStateStack.update(deltaSeconds);
 }
 
 void Game::render()
 {
 	mWindow.clear();
 
-	mWorld.draw();
+	mStateStack.draw();
 
 	// Move to default view so that stats can be drawn at the right position
 	mWindow.setView(mWindow.getDefaultView());

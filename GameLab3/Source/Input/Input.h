@@ -1,5 +1,6 @@
 #pragma once
 
+#include <SFML/Window/Event.hpp>
 #include <SFML/Window/Joystick.hpp>
 #include <SFML/Window/Keyboard.hpp>
 #include <SFML/Window/Mouse.hpp>
@@ -32,6 +33,6 @@ namespace Input
 
 	typedef std::vector<Input> InputCollection;
 	bool inputCollectionPressed(const InputCollection &inputCollection);
-
+	bool eventInputCollectionPressed(const sf::Event &event, const InputCollection &inputCollection);
 }
 

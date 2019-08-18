@@ -17,7 +17,6 @@ public:
 	bool load(IdentityType id, const std::string &fileName, const SecondType &secondParam);
 
 	std::shared_ptr<ResourceType> get(IdentityType id);
-
 	std::shared_ptr<const ResourceType> get(IdentityType id) const;
 
 	void unload(IdentityType id);

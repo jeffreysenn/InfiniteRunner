@@ -29,7 +29,6 @@ SpriteActor::~SpriteActor()
 
 void SpriteActor::reportRenderInfoSelf(Renderer & renderer, sf::RenderStates states) const
 {
-	RenderInfo renderInfo{ &mSprite, states };
+	RenderInfo renderInfo(mSprite, states); 
 	renderer.pushRenderInfo(renderInfo, mLayer);
 }
-

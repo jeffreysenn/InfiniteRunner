@@ -1,5 +1,6 @@
 #include "Input.h"
 
+
 bool inputPressed(const Input::Input &input)
 {
 	switch (input.type)
@@ -23,7 +24,7 @@ bool inputPressed(const Input::Input &input)
 
 bool Input::inputCollectionPressed(const InputCollection &inputCollection)
 {
-	for (auto &input : inputCollection)
+	for (auto const &input : inputCollection)
 	{
 		if (inputPressed(input))
 			return true;
@@ -31,3 +32,34 @@ bool Input::inputCollectionPressed(const InputCollection &inputCollection)
 	return false;
 }
 
+bool eventInputPressed(const sf::Event &event, const Input::Input &input)
+{
+	switch (input.type)
+	{
+	case Input::Type::Joystick:
+		return event.joystickButton.button == input.joystickButtonID;
+	case Input::Type::Keyboard:
+		return event.key.code == input.keyboardKey;
+		break;
+	case Input::Type::Mouse:
+		return event.mouseButton.button == input.mouseButton;
+		break;
+	default:
+		break;
+	}
+
+	return false;
+}
+
+bool Input::eventInputCollectionPressed(const sf::Event &event, const InputCollection &inputCollection)
+{
+	if (event.type != sf::Event::KeyPressed)
+		return false;
+
+	for (auto const &input : inputCollection)
+	{
+		if (eventInputPressed(event, input))
+			return true;
+	}
+	return false;
+}

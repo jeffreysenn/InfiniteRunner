@@ -47,7 +47,5 @@ void ScrollingBackgroundActor::updateSelf(float deltaSeconds)
 	float spriteRightBound = getWorldPosition().x + mSprite.getLocalBounds().width / 2;
 	
 	if (cameraRightBound >= spriteRightBound)
-	{
 		move(mSprite.getLocalBounds().width/2, 0);
-	}
 }
