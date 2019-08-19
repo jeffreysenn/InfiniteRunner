@@ -16,6 +16,7 @@ State::Context::Context(
 State::State(StateStack & stack, const Context &context)
 	: mStack(stack)
 	, mContext(context)
+	, mWindow(*context.window)
 {
 }
 
@@ -36,9 +37,4 @@ void State::requestStackPop()
 void State::requestStateClear()
 {
 	mStack.clearStates();
-}
-
-State::Context State::getContext() const
-{
-	return mContext;
 }

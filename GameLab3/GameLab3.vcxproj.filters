@@ -72,6 +72,9 @@
     <ClCompile Include="Source\States\TitleState.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Source\States\CreditState.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\ResourceManagers\ResourceManager.h">
@@ -155,9 +158,24 @@
     <ClInclude Include="Source\Helpers\GraphicsHelper.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Helpers\EnumHelper.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Input\InputCollections.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\States\MenuTemplate.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\States\CreditState.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="Source\ResourceManagers\ResourceManager.inl">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="Source\States\MenuTemplate.inl">
       <Filter>Header Files</Filter>
     </None>
   </ItemGroup>

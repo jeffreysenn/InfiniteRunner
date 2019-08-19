@@ -1,27 +1,32 @@
 #include "PauseState.h"
 
-
-
 PauseState::PauseState(StateStack & stateStack, const Context & context)
-	: State(stateStack, context)
+	: MenuTemplate(stateStack, context, PauseOptionNames, static_cast<int>(PauseOption::COUNT))
 {
+	mBackgroundShape.setFillColor(sf::Color(0, 0, 0, 80));
+	mBackgroundShape.setSize(sf::Vector2f(getRenderWindow().getSize()));
 }
 
-
-PauseState::~PauseState()
+void PauseState::draw()
 {
+	getRenderWindow().setView(getRenderWindow().getDefaultView());
+	getRenderWindow().draw(mBackgroundShape);
+
+	MenuTemplate<PauseOption>::draw();
 }
 
-bool PauseState::update(float deltaSeconds)
+void PauseState::handleConfirmInput()
 {
-	return false;
-}
-
-bool PauseState::handleEvent(const sf::Event & event)
-{
-	if (event.type == sf::Event::KeyPressed
-		&& event.key.code == sf::Keyboard::Escape)
+	switch (getCurrentOption())
+	{
+	case PauseOption::Resume:
 		requestStackPop();
-
-	return false;
+		break;
+	case PauseOption::GoToMenu:
+		requestStateClear();
+		requestStackPush(StateID::Menu);
+		break;
+	default:
+		break;
+	}
 }

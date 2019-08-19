@@ -42,11 +42,11 @@ protected:
 	void requestStackPop();
 	void requestStateClear();
 
-	Context getContext() const;
-
+	Context getContext() const { return mContext; }
+	sf::RenderWindow& getRenderWindow() const { return mWindow; }
 private:
 	StateStack &mStack;
 	Context mContext;
-
+	sf::RenderWindow &mWindow;
 };
 

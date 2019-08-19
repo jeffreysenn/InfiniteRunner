@@ -19,8 +19,6 @@ private:
 	void continueTextBlink(float deltaSeconds);
 
 private:
-	sf::RenderWindow &mWindow;
-
 	float mTextTime;
 	sf::Text mContinueText;
 

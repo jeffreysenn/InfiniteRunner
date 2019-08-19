@@ -10,7 +10,6 @@
 
 TitleState::TitleState(StateStack & stateStack, const Context & context)
 	: State(stateStack, context)
-	, mWindow(*context.window)
 	, mTextTime(0)
 {
 	setupContinueText();
@@ -39,8 +38,8 @@ bool TitleState::handleEvent(const sf::Event & event)
 
 void TitleState::draw()
 {
-	mWindow.draw(mTitleText);
-	mWindow.draw(mContinueText);
+	getRenderWindow().draw(mTitleText);
+	getRenderWindow().draw(mContinueText);
 }
 
 void TitleState::setupContinueText()
@@ -49,7 +48,7 @@ void TitleState::setupContinueText()
 	mContinueText.setFont(*getContext().fontManager->get(Font::MineCraft));
 	mContinueText.setFillColor(sf::Color::White);
 	GraphicsHelper::centreOrigin(mContinueText);
-	sf::Vector2u windowSize(mWindow.getSize());
+	sf::Vector2u windowSize(getRenderWindow().getSize());
 	mContinueText.setPosition((float)windowSize.x / 2,
 		(float)windowSize.y - 100);
 }
@@ -61,7 +60,7 @@ void TitleState::setupTitleText()
 	mTitleText.setFont(*getContext().fontManager->get(Font::MineCraft));
 	mTitleText.setFillColor(sf::Color::Cyan);
 	GraphicsHelper::centreOrigin(mTitleText);
-	sf::Vector2u windowSize(mWindow.getSize());
+	sf::Vector2u windowSize(getRenderWindow().getSize());
 	mTitleText.setPosition((float)windowSize.x / 2,
 		(float)windowSize.y / 2);
 

@@ -1,16 +1,33 @@
 #pragma once
-#include "State.h"
+#include "MenuTemplate.h"
 
-#include <SFML/Window/Event.hpp>
+#include <SFML/Graphics/RectangleShape.hpp>
 
-class PauseState :
-	public State
+enum class PauseOption
+{
+	Resume,
+	GoToMenu,
+	COUNT,
+};
+
+static const char* PauseOptionNames[]
+{
+	"Resume",
+	"Main Menu",
+};
+
+
+class PauseState : public MenuTemplate<PauseOption>
 {
 public:
 	PauseState(StateStack &stateStack, const Context &context);
-	~PauseState();
 
-	virtual bool update(float deltaSeconds) override;
-	virtual bool handleEvent(const sf::Event& event) override;
+	void draw() override;
+
+private:
+	void handleConfirmInput() override;
+
+private:
+	sf::RectangleShape mBackgroundShape;
 };
 

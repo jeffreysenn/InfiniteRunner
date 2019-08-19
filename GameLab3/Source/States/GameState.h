@@ -2,6 +2,7 @@
 #include "State.h"
 #include "../Worlds/World.h"
 #include "../Rendering/Renderer.h"
+#include "../Input/Input.h"
 
 #include <SFML/Graphics/Sprite.hpp>
 #include <SFML/Graphics/Text.hpp>
@@ -20,5 +21,8 @@ private:
 	World mWorld;
 	PlayerController& mPlayerController;
 	Renderer mRenderer;
-};
+	Input::InputCollection mPauseInputs{
+		{ Input::Type::Keyboard, sf::Keyboard::Escape },
+		{ Input::Type::Keyboard, sf::Keyboard::BackSpace }};
 
+};

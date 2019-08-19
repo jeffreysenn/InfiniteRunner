@@ -4,6 +4,7 @@
 #include "States/MenuState.h"
 #include "States/GameState.h"
 #include "States/PauseState.h"
+#include "States/CreditState.h"
 
 #include <SFML/Window/Event.hpp>
 #include <SFML/Graphics/Color.hpp>
@@ -76,6 +77,7 @@ void Game::registerStates()
 	mStateStack.registerState<MenuState>(StateID::Menu);
 	mStateStack.registerState<GameState>(StateID::Game);
 	mStateStack.registerState<PauseState>(StateID::Pause);
+	mStateStack.registerState<CreditState>(StateID::Credit);
 }
 
 void Game::handleInputs()

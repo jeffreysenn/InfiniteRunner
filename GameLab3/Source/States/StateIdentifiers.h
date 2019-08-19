@@ -7,5 +7,8 @@ enum class StateID
 	Menu,
 	Game,
 	Loading,
-	Pause
+	Pause,
+	Credit,
+	Setting,
+	WIP,
 };

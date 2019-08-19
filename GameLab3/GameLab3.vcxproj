@@ -95,6 +95,7 @@ IF %ERRORLEVEL% LEQ 1 exit 0</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Source\States\CreditState.cpp" />
     <ClCompile Include="Source\States\GameState.cpp" />
     <ClCompile Include="Source\States\MenuState.cpp" />
     <ClCompile Include="Source\States\PauseState.cpp" />
@@ -116,9 +117,13 @@ IF %ERRORLEVEL% LEQ 1 exit 0</Command>
     <ClCompile Include="Source\States\TitleState.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Source\States\CreditState.h" />
+    <ClInclude Include="Source\Input\InputCollections.h" />
+    <ClInclude Include="Source\Helpers\EnumHelper.h" />
     <ClInclude Include="Source\Helpers\GraphicsHelper.h" />
     <ClInclude Include="Source\States\GameState.h" />
     <ClInclude Include="Source\States\MenuState.h" />
+    <ClInclude Include="Source\States\MenuTemplate.h" />
     <ClInclude Include="Source\States\PauseState.h" />
     <ClInclude Include="Source\Controllers\PlayerController.h" />
     <ClInclude Include="Source\Debug\FPSMeter.h" />
@@ -146,6 +151,7 @@ IF %ERRORLEVEL% LEQ 1 exit 0</Command>
   </ItemGroup>
   <ItemGroup>
     <None Include="Source\ResourceManagers\ResourceManager.inl" />
+    <None Include="Source\States\MenuTemplate.inl" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
