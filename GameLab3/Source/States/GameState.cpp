@@ -6,7 +6,7 @@
 
 GameState::GameState(StateStack & stateStack, const Context & context)
 try : State(stateStack, context)
-	, mWorld(*context.window)
+	, mWorld(context)
 	, mPlayerController(*context.playerController)
 {
 }

@@ -22,6 +22,7 @@ void MenuState::handleConfirmInput()
 		requestStackPush(StateID::Game);
 		break;
 	case Menu::Option::Settings:
+		requestStackPush(StateID::Setting);
 		break;
 	case Menu::Option::Credits:
 		requestStackPush(StateID::Credit);
@@ -36,11 +37,6 @@ void MenuState::handleConfirmInput()
 
 void MenuState::setupBackgroundSprite()
 {
-	 //TODO: load resources in loadingState
-	getContext().textureManager->
-		load(Texture::Back,
-			 "Assets/sunny-land-files/environment/back.png");
-
 	auto & backgroungTexture = *getContext().textureManager->get(Texture::Back);
 	backgroungTexture.setRepeated(true);
 	mBackgroundSprite.setTexture(backgroungTexture);

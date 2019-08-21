@@ -5,7 +5,7 @@
 #include <SFML/System/Time.hpp>
 #include <SFML/Window/Event.hpp>
 
-StateStack::StateStack(const State::Context &context)
+StateStack::StateStack(const Context &context)
 	: mContext(context)
 {
 }

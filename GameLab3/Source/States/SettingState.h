@@ -3,7 +3,7 @@
 
 #include <SFML/Graphics/RectangleShape.hpp>
 
-namespace Credit
+namespace Setting
 {
 	enum class Option
 	{
@@ -17,11 +17,10 @@ namespace Credit
 	};
 }
 
-
-class CreditState : public MenuTemplate<Credit::Option>
+class SettingState : public MenuTemplate<Setting::Option>
 {
 public:
-	CreditState(StateStack &stateStack, const Context &context);
+	SettingState(StateStack &stateStack, const Context &context);
 
 	void draw() override;
 

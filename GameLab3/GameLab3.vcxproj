@@ -111,12 +111,14 @@ IF %ERRORLEVEL% LEQ 1 exit 0</Command>
     <ClCompile Include="Source\Actors\Actor.cpp" />
     <ClCompile Include="Source\main.cc" />
     <ClCompile Include="Source\Actors\SpriteActor.cpp" />
+    <ClCompile Include="Source\States\SettingState.cpp" />
     <ClCompile Include="Source\States\State.cpp" />
     <ClCompile Include="Source\States\StateStack.cpp" />
     <ClCompile Include="Source\Worlds\World.cpp" />
     <ClCompile Include="Source\States\TitleState.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Source\States\Context.h" />
     <ClInclude Include="Source\States\CreditState.h" />
     <ClInclude Include="Source\Input\InputCollections.h" />
     <ClInclude Include="Source\Helpers\EnumHelper.h" />
@@ -142,6 +144,7 @@ IF %ERRORLEVEL% LEQ 1 exit 0</Command>
     <ClInclude Include="Source\SceneNodes\SceneNode.h" />
     <ClInclude Include="Source\Actors\Actor.h" />
     <ClInclude Include="Source\ResourceManagers\ResourceManager.h" />
+    <ClInclude Include="Source\States\SettingState.h" />
     <ClInclude Include="Source\States\State.h" />
     <ClInclude Include="Source\States\StateIdentifiers.h" />
     <ClInclude Include="Source\Actors\SpriteActor.h" />

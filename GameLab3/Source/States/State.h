@@ -1,16 +1,8 @@
 #pragma once
-#include "../ResourceManagers/ResourceIdentifiers.h"
+#include "Context.h"
 
 #include <memory>
 
-namespace sf
-{
-	class RenderWindow;
-	class Time;
-	class Event;
-}
-
-class PlayerController;
 class StateStack;
 
 class State
@@ -18,18 +10,6 @@ class State
 public:
 	typedef std::unique_ptr<State> Ptr;
 
-	struct Context
-	{
-		explicit Context(sf::RenderWindow& window, TextureManager& textureManager,
-						 FontManager& fontManager, PlayerController& playerController);
-
-		sf::RenderWindow* window;
-		TextureManager* textureManager;
-		FontManager* fontManager;
-		PlayerController* playerController;
-	};
-
-public:
 	explicit State(StateStack &stack, const Context &context);
 	virtual ~State();
 
@@ -43,10 +23,9 @@ protected:
 	void requestStateClear();
 
 	Context getContext() const { return mContext; }
-	sf::RenderWindow& getRenderWindow() const { return mWindow; }
+	sf::RenderWindow& getRenderWindow() const { return *mContext.window; }
 private:
 	StateStack &mStack;
 	Context mContext;
-	sf::RenderWindow &mWindow;
 };
 

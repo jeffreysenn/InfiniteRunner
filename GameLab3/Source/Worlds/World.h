@@ -11,11 +11,11 @@
 #include <SFML/Graphics/RenderWindow.hpp>
 
 
-
 class World : private sf::NonCopyable
 {
 public:
-	explicit World(sf::RenderWindow& window);
+	explicit World(const struct Context &context);
+	~World();
 
 	void update(float deltaSeconds);
 
@@ -33,7 +33,7 @@ private:
 	Renderer mRenderer;
 	class CameraActor* mCamera;
 	class SceneNode* mBackgroundNode;
-	TextureManager mTextureManager;
+	TextureManager &mTextureManager;
 	SceneNode mSceneGraph;
 	class AvatarActor* mAvatarActor;
 	sf::Vector2f mSpawnPosition = sf::Vector2f(0, -20);

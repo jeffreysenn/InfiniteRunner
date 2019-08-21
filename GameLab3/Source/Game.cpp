@@ -5,6 +5,7 @@
 #include "States/GameState.h"
 #include "States/PauseState.h"
 #include "States/CreditState.h"
+#include "States/SettingState.h"
 
 #include <SFML/Window/Event.hpp>
 #include <SFML/Graphics/Color.hpp>
@@ -17,11 +18,14 @@ try : mWindow(
 	sf::VideoMode(960, 540),
 	"Endless Runner",
 	sf::Style::Titlebar | sf::Style::Close)
-	, mStateStack(State::Context(mWindow, mTextureManager, mFontManager, mPlayerController))
+	, mStateStack(Context(mWindow, mTextureManager, mFontManager, mPlayerController))
 	, mFPSMeter(mStatsText)
 	, mbPaused(false)
 {
 	mWindow.setKeyRepeatEnabled(true);
+
+	mTextureManager.load(Texture::Back,
+			 "Assets/sunny-land-files/environment/back.png");
 
 	mFontManager.load(Font::MineCraft, "Assets/Fonts/Minecraft.ttf");
 	mStatsText.setFont(*mFontManager.get(Font::MineCraft));
@@ -78,6 +82,7 @@ void Game::registerStates()
 	mStateStack.registerState<GameState>(StateID::Game);
 	mStateStack.registerState<PauseState>(StateID::Pause);
 	mStateStack.registerState<CreditState>(StateID::Credit);
+	mStateStack.registerState<SettingState>(StateID::Setting);
 }
 
 void Game::handleInputs()

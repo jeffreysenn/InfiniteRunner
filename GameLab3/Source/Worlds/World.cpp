@@ -1,19 +1,28 @@
 #include "World.h"
 
+#include "../States/Context.h"
+
 #include "../Actors/ScrollingBackgroundActor.h"
 #include "../Actors/CameraActor.h"
 #include "../Actors/AvatarActor.h"
 
 #include <iostream>
 
-World::World(sf::RenderWindow &window)
-	: mWindow(window)
+World::World(const Context &context)
+	: mWindow(*context.window)
+	, mTextureManager(*context.textureManager)
 	, mCamera(nullptr)
 	, mAvatarActor(nullptr)
 	, mScrollVelocity(30.f, 0)
 {
 	loadResources();
 	buildScene();
+}
+
+World::~World()
+{
+	mTextureManager.unload(Texture::Middle);
+	mTextureManager.unload(Texture::Avatar);
 }
 
 void World::loadResources()
@@ -23,7 +32,6 @@ void World::loadResources()
 
 void World::loadTextures()
 {
-	mTextureManager.load(Texture::Back, "Assets/sunny-land-files/environment/back.png");
 	mTextureManager.load(Texture::Middle, "Assets/sunny-land-files/environment/middle.png");
 	mTextureManager.load(Texture::Avatar, "Assets/sunny-land-files/spritesheets/player-idle.png");
 }
